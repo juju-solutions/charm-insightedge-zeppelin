@@ -1,0 +1,6 @@
+dirs:
+    insightedge:
+        path: '/usr/lib/insightedge'
+        owner: 'ubuntu'
+    zeppelin:
+        path: '{dirs[insightedge]}/zeppelin'

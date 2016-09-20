@@ -1,0 +1,14 @@
+name: insightedge-zeppelin
+maintainer: Big Data Team <bigdata@lists.ubuntu.com>
+description: |
+  Apache Zeppelin is a web-based notebook that enables interactive data
+  analytics. You can make beautiful data-driven, interactive, and collaborative
+  documents with SQL, Scala and more.
+
+  This distribution of Zeppelin is modified to work best with the InsightEdge
+  platform.
+resources:
+  insightedge:
+    type: file
+    filename: insightedge.tar.gz
+    description: The InsightEdge distribution containing Apache Zeppelin

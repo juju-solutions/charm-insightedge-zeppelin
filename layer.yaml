@@ -1,0 +1,10 @@
+repo: git@github.com:juju-solutions/charm-insightedge-zeppelin.git
+includes: ['layer:apache-zeppelin']
+metadata:
+  deletes:
+    - resources.zeppelin
+ignore:
+  resources.yaml
+options:
+  apache-zeppelin:
+    implementation_class: charms.layer.insightedge_zeppelin.IEZeppelin
