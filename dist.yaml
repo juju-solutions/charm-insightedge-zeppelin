@@ -4,3 +4,5 @@ dirs:
         owner: 'ubuntu'
     zeppelin:
         path: '{dirs[insightedge]}/zeppelin'
+    zeppelin_notebooks:
+        path: '/usr/lib/insightedge/zeppelin/notebook'

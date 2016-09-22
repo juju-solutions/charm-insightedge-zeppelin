@@ -1,5 +1,4 @@
-import os
-import shutil
+from path import Path
 
 from charmhelpers.core import host, hookenv
 from charmhelpers import fetch
@@ -9,7 +8,7 @@ from charms.layer.apache_zeppelin import Zeppelin
 
 
 class IEZeppelin(Zeppelin):
-    def install(self):
+    def install(self, force=False):
         """
         Override install to handle nested zeppelin dir, and different
         resource name.
@@ -20,12 +19,12 @@ class IEZeppelin(Zeppelin):
         if not filename:
             return False  # failed to fetch
 
-        extracted = fetch.install_remote('file://' + filename)
-        # get the nested dir
-        extracted = os.path.join(extracted, os.listdir(extracted)[0])
-        if os.path.exists(destination):
-            shutil.rmtree(destination)
-        shutil.copytree(extracted, destination)
+        if destination.exists() and not force:
+            return True
+
+        destination.rmtree_p()  # if reinstalling
+        extracted = Path(fetch.install_remote('file://' + filename))
+        extracted.dirs()[0].copytree(destination)  # only copy nested dir
 
         host.chownr(destination, 'ubuntu', 'root')
         zd = self.dist_config.path('zeppelin') / 'bin' / 'zeppelin-daemon.sh'
@@ -34,6 +33,9 @@ class IEZeppelin(Zeppelin):
         self.dist_config.add_dirs()
         self.dist_config.add_packages()
         return True
+
+    def setup_zeppelin_tutorial(self):
+        pass  # this is already done by insightedge
 
     def start(self):
         """
