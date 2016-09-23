@@ -4,7 +4,7 @@ from charmhelpers.core import host, hookenv
 from charmhelpers import fetch
 from jujubigdata import utils
 
-from charms.layer.apache_zeppelin import Zeppelin
+from charms.layer.apache_zeppelin import Zeppelin, ZeppelinAPI
 
 
 class IEZeppelin(Zeppelin):
@@ -36,6 +36,14 @@ class IEZeppelin(Zeppelin):
 
     def setup_zeppelin_tutorial(self):
         pass  # this is already done by insightedge
+
+    def update_master(self, master_url, master_ip):
+        api = ZeppelinAPI()
+        api.modify_interpreter('spark', properties={
+            'master': master_url,
+            'insightedge.locator': '{}:4174'.format(master_ip),
+        })
+        self.restart()
 
     def start(self):
         """
